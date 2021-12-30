@@ -15,7 +15,7 @@
 <div id="scoreBoard">
     <div id="control">
         <h1>GET THE GIFT!!!</h1>
-<!--        <input id="name" placeholder="Enter your name"><br><br>-->
+        <!--        <input id="name" placeholder="Enter your name"><br><br>-->
         <button type="button" id="start" onclick="playGame()" style="margin-left: 160px"></button>
         <br>
         <p id="currentPoint">Current Point</p><br>
@@ -84,8 +84,12 @@
             firstGift.x = santa.x
             loseGift++
             document.getElementById('loseGift').innerHTML = 'Gift lost:' + loseGift
-
-
+        }
+        if (point == 5) {
+            firstGift.speed = 0.75
+        }
+        if (point == 10) {
+            firstGift.speed = 1
         }
         firstGift.moveDown()
         updateCanvas()
@@ -110,7 +114,7 @@
 
         } else {
 
-        santa.moveRight()
+            santa.moveRight()
             updateCanvas()
         }
 
@@ -119,7 +123,7 @@
 
     function moveBasket(event) {
         if (loseGift >= 3) {
-drawEndgame(ctx)
+            drawEndgame(ctx)
             updateCanvas()
 
         } else {
@@ -150,7 +154,7 @@ drawEndgame(ctx)
 
         moveSanta()
         dropGift()
-        document.addEventListener('keydown', moveBasket)
+        document.addEventListener('mousemove', moveByMouse)
 
     }
 
@@ -158,9 +162,26 @@ drawEndgame(ctx)
         let img = new Image()
         img.src = 'img/game-over.png'
         img.onload = () => {
-            ctx.drawImage(img,100, 50, 100, 50)
+            ctx.drawImage(img, 100, 50, 100, 50)
         }
     }
+
+    let MouseX
+
+
+    function moveMouse(e) {
+        MouseX = e.clientX
+    }
+
+    function moveByMouse() {
+        document.getElementById('playGround').addEventListener('mousemove', function (event) {
+            moveMouse(event)
+        })
+        basket.drawBasket(ctx)
+        basket.x = MouseX-400
+        updateCanvas()
+    }
+
 
 </script>
 
