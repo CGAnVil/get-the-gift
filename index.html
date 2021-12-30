@@ -30,16 +30,16 @@
                 <td class="PlayerName">Player name</td>
                 <td class="Score">Score</td>
             </tr>
-<!--            <tr>-->
-<!--                <td class="rank" id="rank1"></td>-->
-<!--                <td class="PlayerName"></td>-->
-<!--                <td class="Score"></td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td class="rank"></td>-->
-<!--                <td class="PlayerName"></td>-->
-<!--                <td class="Score"></td>-->
-<!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td class="rank" id="rank1"></td>-->
+            <!--                <td class="PlayerName"></td>-->
+            <!--                <td class="Score"></td>-->
+            <!--            </tr>-->
+            <!--            <tr>-->
+            <!--                <td class="rank"></td>-->
+            <!--                <td class="PlayerName"></td>-->
+            <!--                <td class="Score"></td>-->
+            <!--            </tr>-->
         </table>
     </div>
 
@@ -50,7 +50,8 @@
 
     let canvas = document.getElementById('playGround')
     let ctx = canvas.getContext('2d')
-    let santa = new Santa(0, 0, 30, 20, 'img/santa.png', 1)
+
+    let santa = new Santa(0, 0, 24, 24, 'img/santa.png', 1)
     santa.drawSanta(ctx)
     let basket = new Basket(0, 120, 30, 20, 'img/basket.png', 5)
     basket.drawBasket(ctx)
@@ -114,32 +115,39 @@
 
     function moveSanta() {
         if (santa.x + santa.width > 280) {
-            santa.x = 0
+            santa.x = 0;
 
         }
-
+        // if (santa.x == 0) {
+        //     santa.src = 'img/santa.png'
         santa.moveRight()
+        // }
         updateCanvas()
         santaIntervalId = requestAnimationFrame(moveSanta)
     }
 
     function moveBasket(event) {
+        if (loseGift >= 3) {
+drawEndgame(ctx)
+            updateCanvas()
 
-        switch (event.keyCode) {
-            case 37: {
+        } else {
+            switch (event.keyCode) {
+                case 37: {
 
-                if (basket.x < 1) {
-                    return;
+                    if (basket.x < 1) {
+                        return;
+                    }
+                    basket.moveLeft();
+                    break;
                 }
-                basket.moveLeft();
-                break;
-            }
-            case 39: {
-                if (basket.x + basket.width > 250) {
-                    return;
+                case 39: {
+                    if (basket.x + basket.width > 250) {
+                        return;
+                    }
+                    basket.moveRight();
+                    break
                 }
-                basket.moveRight();
-                break
             }
         }
         updateCanvas()
@@ -157,14 +165,13 @@
 
     function drawEndgame(ctx) {
         let img = new Image()
-        img.src = 'img/game_over.png'
-        img.onload(ctx)
-        {
-            ctx.drawImage(0, 0, 200, 200)
+        img.src = 'img/game-over.png'
+        img.onload = () => {
+            ctx.drawImage(img,100, 50, 100, 50)
         }
     }
 
 </script>
-<a href=""></a>
+
 </body>
 </html>
