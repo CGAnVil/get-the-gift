@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chrismast Gift</title>
+    <link rel="stylesheet" href="xmas-gift.css">
+    <script src="santa.js"></script>
+    <script src="basket.js"></script>
+    <script src="gift.js"></script>
+    <script src="gameplay.js"></script>
+
+</head>
+<body>
+<canvas id="playGround"></canvas>
+<div id="scoreBoard">
+    <div id="control">
+        <h1>GET THE GIFT!!!</h1>
+        <input id="name" placeholder="Enter your name"><br><br>
+        <button type="button" id="start" onclick="playGame()"></button>
+        <br>
+        <p id="currentPoint"></p><br>
+        <p id="loseGift"></p>
+
+    </div>
+    <div id="rankBoard">
+        <h2>Ranking Board</h2>
+        <table>
+            <tr>
+                <td class="rank">Rank</td>
+                <td class="PlayerName">Player name</td>
+                <td class="Score">Score</td>
+            </tr>
+<!--            <tr>-->
+<!--                <td class="rank" id="rank1"></td>-->
+<!--                <td class="PlayerName"></td>-->
+<!--                <td class="Score"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td class="rank"></td>-->
+<!--                <td class="PlayerName"></td>-->
+<!--                <td class="Score"></td>-->
+<!--            </tr>-->
+        </table>
+    </div>
+
+</div>
+
+<script>
+
+
+    let canvas = document.getElementById('playGround')
+    let ctx = canvas.getContext('2d')
+    let santa = new Santa(0, 0, 30, 20, 'img/santa.png', 1)
+    santa.drawSanta(ctx)
+    let basket = new Basket(0, 120, 30, 20, 'img/basket.png', 5)
+    basket.drawBasket(ctx)
+    let firstGift = new Gift(santa.x, 0, 20, 15, 'img/gift.png', 0.5)
+    firstGift.drawGift(ctx)
+    let statusLost = false
+    let giftIntervalId = -1
+    let santaIntervalId = -1
+    let point = 0
+    let loseGift = 0
+
+
+    function clearCanvas() {
+        ctx.clearRect(0, 0, 600, 650)
+    }
+
+    function updateCanvas() {
+        clearCanvas()
+        firstGift.drawGift(ctx)
+        santa.drawSanta(ctx)
+        basket.drawBasket(ctx)
+    }
+
+    function checkContact() {
+        if (firstGift.x >= basket.x && firstGift.x <= basket.x + basket.width && firstGift.y + firstGift.height >= basket.y) {
+            if (firstGift.x + firstGift.width >= basket.x && firstGift.x + firstGift.width <= basket.x + basket.width) {
+                return true
+            }
+        } else {
+            return false
+        }
+
+    }
+
+    function dropGift() {
+        if (firstGift.y + firstGift.height > 180) {
+            statusLost = true
+            firstGift.y = 0
+            firstGift.x = santa.x
+            loseGift++
+            document.getElementById('loseGift').innerHTML = 'Gift lost:' + loseGift
+
+
+        }
+        firstGift.moveDown()
+        updateCanvas()
+        if (checkContact()) {
+            firstGift.y = 0
+            firstGift.x = santa.x
+            point++
+            document.getElementById('currentPoint').innerHTML = 'Current Point:' + point
+
+        }
+        giftIntervalId = requestAnimationFrame(dropGift)
+        if (loseGift >= 3) {
+            cancelAnimationFrame(santaIntervalId)
+            cancelAnimationFrame(giftIntervalId)
+
+        }
+    }
+
+    function moveSanta() {
+        if (santa.x + santa.width > 280) {
+            santa.x = 0
+
+        }
+
+        santa.moveRight()
+        updateCanvas()
+        santaIntervalId = requestAnimationFrame(moveSanta)
+    }
+
+    function moveBasket(event) {
+
+        switch (event.keyCode) {
+            case 37: {
+
+                if (basket.x < 1) {
+                    return;
+                }
+                basket.moveLeft();
+                break;
+            }
+            case 39: {
+                if (basket.x + basket.width > 250) {
+                    return;
+                }
+                basket.moveRight();
+                break
+            }
+        }
+        updateCanvas()
+
+    }
+
+
+    function playGame() {
+
+        moveSanta()
+        dropGift()
+        document.addEventListener('keydown', moveBasket)
+
+    }
+
+    function drawEndgame(ctx) {
+        let img = new Image()
+        img.src = 'img/game_over.png'
+        img.onload(ctx)
+        {
+            ctx.drawImage(0, 0, 200, 200)
+        }
+    }
+
+</script>
+<a href=""></a>
+</body>
+</html>

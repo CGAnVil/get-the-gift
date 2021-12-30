@@ -1,0 +1,67 @@
+
+#scoreBoard {
+    width: 400px;
+    height: 650px;
+    position: absolute;
+    left: 900px;
+    top: 40px;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: solid 1px black;
+
+}
+
+#playGround {
+    width: 600px;
+    height: 650px;
+    position: absolute;
+    background: url("img/background.gif");
+    left: 200px;
+    top: 40px;
+    margin: 0 auto;
+    border-radius: 10px;
+
+}
+
+#rankBoard {
+    width: 400px;
+    height: 300px;
+
+}
+
+#control {
+    width: 400px;
+    height: 350px;
+    border-bottom: black solid 1px;
+}
+
+#start {
+    width: 64px;
+    height: 64px;
+    background: url("img/start-button.png");
+    border: none;
+}
+
+h2 {
+    color: red;
+    text-align: center;
+}
+
+td {
+    width: fit-content;
+    border: 1px solid rosybrown;
+    text-align: center;
+}
+
+.rank {
+    width: 50px;
+}
+
+.PlayerName {
+    width: 300px;
+}
+
+.Score {
+    width: 100px;
+}
+
