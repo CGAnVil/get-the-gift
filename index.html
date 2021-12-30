@@ -104,7 +104,9 @@
         if (loseGift >= 3) {
             cancelAnimationFrame(santaIntervalId)
             cancelAnimationFrame(giftIntervalId)
-
+            basket.x = 200;
+            clearCanvas()
+            drawEndgame(ctx)
         }
     }
 
@@ -150,13 +152,7 @@
     }
 
 
-    function playGame() {
 
-        moveSanta()
-        dropGift()
-        document.addEventListener('mousemove', moveByMouse)
-
-    }
 
     function drawEndgame(ctx) {
         let img = new Image()
@@ -178,10 +174,17 @@
             moveMouse(event)
         })
         basket.drawBasket(ctx)
-        basket.x = MouseX-400
+        basket.x = MouseX - 400
         updateCanvas()
     }
 
+    function playGame() {
+
+        moveSanta()
+        dropGift()
+        document.addEventListener('mousemove', moveByMouse)
+
+    }
 
 </script>
 
