@@ -15,11 +15,11 @@
 <div id="scoreBoard">
     <div id="control">
         <h1>GET THE GIFT!!!</h1>
-        <input id="name" placeholder="Enter your name"><br><br>
-        <button type="button" id="start" onclick="playGame()"></button>
+<!--        <input id="name" placeholder="Enter your name"><br><br>-->
+        <button type="button" id="start" onclick="playGame()" style="margin-left: 160px"></button>
         <br>
-        <p id="currentPoint"></p><br>
-        <p id="loseGift"></p>
+        <p id="currentPoint">Current Point</p><br>
+        <p id="loseGift">Gift Lost</p>
 
     </div>
     <div id="rankBoard">
@@ -30,16 +30,7 @@
                 <td class="PlayerName">Player name</td>
                 <td class="Score">Score</td>
             </tr>
-            <!--            <tr>-->
-            <!--                <td class="rank" id="rank1"></td>-->
-            <!--                <td class="PlayerName"></td>-->
-            <!--                <td class="Score"></td>-->
-            <!--            </tr>-->
-            <!--            <tr>-->
-            <!--                <td class="rank"></td>-->
-            <!--                <td class="PlayerName"></td>-->
-            <!--                <td class="Score"></td>-->
-            <!--            </tr>-->
+
         </table>
     </div>
 
@@ -115,14 +106,14 @@
 
     function moveSanta() {
         if (santa.x + santa.width > 280) {
-            santa.x = 0;
+            santa.x = 0
 
-        }
-        // if (santa.x == 0) {
-        //     santa.src = 'img/santa.png'
+        } else {
+
         santa.moveRight()
-        // }
-        updateCanvas()
+            updateCanvas()
+        }
+
         santaIntervalId = requestAnimationFrame(moveSanta)
     }
 
@@ -142,7 +133,7 @@ drawEndgame(ctx)
                     break;
                 }
                 case 39: {
-                    if (basket.x + basket.width > 250) {
+                    if (basket.x + basket.width > 280) {
                         return;
                     }
                     basket.moveRight();
